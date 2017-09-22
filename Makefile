@@ -1,25 +1,21 @@
-# Makefile for llist
+# This is a Makefile. Make sure it has that name.
 
-all: check_dlist_node check_dlist
+# The first rule in a Makefile is the default. So, by default,
+# this Makefile builds both prime and count_xs. You can write
+# `make prime` or `make count_xs` on the command line to make
+# just one
 
-check_dlist_node: check_dlist_node.o dlist_node.o
-	gcc -g -o $@ $^ -lcheck
+# This line says that `prime` depends on `prime.o` and `main.o`,
+# and then how to build the target (prime) from the dependencies
+mat: check_mat.o main.o
+	gcc -o mat check_mat.o main.o
 
-check_dlist: check_dlist.o dlist.o dlist_node.o
-	gcc -g -o $@ $^ -lcheck
+# Other rules are similar.
+main.o: main.c 
+	gcc -c main.c
 
-%.o: %.c
-	gcc -g -c $^
+prime.o: prime.c prime.h
+	gcc -c prime.c
 
-check_dlist_node.o dlist_node.o: dlist_node.h
-check_dlist.o: dlist.h
-dlist.o: dlist.h dlist_node.h
-
-clean:
-	rm -rf check_dlist_node check_dlist
-	rm -rf *.o *.gch *.dSYM
-
-.PHONY: all
-
-# this next line prevents `make` from deleting the .o files
-.SECONDARY:
+count_xs: count_xs.c
+	gcc -o count_xs count_xs.c
